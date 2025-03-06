@@ -1,9 +1,9 @@
 
 ###### RDS Module ######
-module "rds-in-east-5" {
+module "rds-ap-south-1" {
   source = "../../../modules/afm-terraform-rds"
   providers = {
-    aws = aws.in-east-5
+    aws = aws.ap-south-1
   }
   common-tags        = var.common-tags
   environment        = var.environment
@@ -20,7 +20,7 @@ module "afm-heartbeat-sqs" {
   common-tags = var.common-tags
 }
 
-module "secrets-manager-in-east-5" {
+module "secrets-manager-ap-south-1" {
   source            = "../../../modules/ags-terraform-secret-manager"
   common-tags       = var.common-tags
   access-key-id     = var.access-key-id
@@ -28,7 +28,7 @@ module "secrets-manager-in-east-5" {
   environment       = var.environment
 }
 
-module "ssm-parameter-in-east-5" {
+module "ssm-parameter-ap-south-1" {
   source                                         = "../../../modules/ags-ssm-parameter"
   common-tags                                    = var.common-tags
   environment                                    = var.environment
