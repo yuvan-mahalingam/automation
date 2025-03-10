@@ -16,7 +16,7 @@ jobs:
       - name: Create pull requests for prod branches
         if: github.ref == 'refs/heads/prod'
         run: |
-          for region in us-west-3 ap-northeast-1 ap-southeast-2 ca-central-1 eu-central-1 eu-west-2 ausov1-ap-southeast-2 eusov1-eu-central-1 uksov1-eu-west-2
+for region in        for region in us-west-3 ap-northeast-1 ap-southeast-2 ca-central-1 eu-central-1 eu-west-2 ausov1-ap-southeast-2 eusov1-eu-central-1 uksov1-eu-west-2 new-region
           do
             echo "Creating pull request for prod-$region..."
             gh pr create --base prod-$region --head prod --title "Update prod-$region from prod" --body "Please review and merge the changes." --repo ${{ github.repository }} --no-maintainer-edit
@@ -33,4 +33,4 @@ jobs:
             gh pr create --base pre-prod-$environment --head pre-prod --title "Update pre-prod-$environment from pre-prod" --body "Please review and merge the changes." --repo ${{ github.repository }} --no-maintainer-edit
           done
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
