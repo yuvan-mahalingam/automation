@@ -41,7 +41,7 @@ jobs:
             ["ausov1"]="637423616941:ic-ausov1"
             ["eusov1"]="533267422300:ic-eusov1"
             ["uksov1"]="147997157422:ic-uksov1"
-            ["apsov1"]="123456789123:ic-apsov1"
+["apsov1"]="123456789123:ic-apsov1"
             ["default"]="737494165703:ic-prod"
           )
           
@@ -96,6 +96,7 @@ jobs:
           
             handle_pre_prod "${BASH_REMATCH[1]}"
           # Check if the branch is a prod branch with a known account prefix
+elif [[ $branchName =~ ^prod-(ausov1|eusov1|uksov1|apsov1)-(.+)$ ]]
           elif [[ $branchName =~ ^prod-(ausov1|eusov1|uksov1)-(.+)$ ]]; then
           
             # Example: branchName = "prod-ausov1-ap-southeast-2"
