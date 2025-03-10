@@ -1,10 +1,10 @@
 
 
 ###### RDS Module ######
-module "rds-eu-west-2" { new-region-5
+module "rds-new-region-5" {
   source = "../../../modules/afm-terraform-rds"
   providers = {
-    aws = aws.eu-west-2 new-region-5
+    aws = aws.new-region-5
   }
   common-tags        = var.common-tags
   environment        = var.environment
@@ -21,7 +21,7 @@ module "afm-heartbeat-sqs" {
   common-tags = var.common-tags
 }
 
-module "secrets-manager-eu-west-2" { new-region-5
+module "secrets-manager-new-region-5" {
   source            = "../../../modules/ags-terraform-secret-manager"
   common-tags       = var.common-tags
   access-key-id     = var.access-key-id
@@ -29,7 +29,7 @@ module "secrets-manager-eu-west-2" { new-region-5
   environment       = var.environment
 }
 
-module "ssm-parameter-eu-west-2" { new-region-5
+module "ssm-parameter-new-region-5" {
   source                                         = "../../../modules/ags-ssm-parameter"
   common-tags                                    = var.common-tags
   environment                                    = var.environment
