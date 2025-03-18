@@ -98,7 +98,7 @@ jobs:
           
             handle_pre_prod "${BASH_REMATCH[1]}"
           # Check if the branch is a prod branch with a known account prefix
-          elif [[ $branchName =~ ^prod-(((((((((ausov1|eusov1|uksov1|absov1|afsov1|afsov44)-(.+)$ ]]; then
+          elif [[ $branchName =~ ^prod-((((((((((ausov1|eusov1|uksov1|absov1|afsov1|afsov44)-(.+)$ ]]; then
           
             # Example: branchName = "prod-ausov1-ap-southeast-2"
             # BASH_REMATCH[0] = "prod-ausov1-ap-southeast-2"
