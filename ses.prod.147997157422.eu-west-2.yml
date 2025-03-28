@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Creates the SES pipeline's resources for uksov.
+
+Resources:
+  ReceiptRuleSet:
+    # There can only be one active ruleset in a given AWS account & region.
+    Type: AWS::SES::ReceiptRuleSet
+    Properties:
+      RuleSetName: !Sub ${AWS::StackName}-receipt-rule-set
+
+  DropNoReplyReceiptRule:
+    Type: AWS::SES::ReceiptRule
+    Properties:
+      RuleSetName: !Sub ${AWS::StackName}-receipt-rule-set
+      Rule:
+        Name: drop-noreply-receiptrule
+        Recipients:
+          - noreply@mail-uk2.nicecxone-sov1.uk
+          - bounce@mail-uk2.nicecxone-sov1.uk
+        Enabled: true
+        ScanEnabled: true
+        TlsPolicy: Optional
+        Actions:
+          - StopAction:
+              Scope: RuleSet
+    DependsOn:
+      - ReceiptRuleSet
+
+  UksovMicroservicesSNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: channels-email-ses-sns-topic-uksov
+      TopicName: channels-email-ses-sns-topic-uksov
+
+  UksovMicroservicesReceiptRule:
+    Type: AWS::SES::ReceiptRule
+    Properties:
+      RuleSetName: !Sub ${AWS::StackName}-receipt-rule-set
+      After: !Ref DropNoReplyReceiptRule
+      Rule:
+        Name: uksov-receipt-rule
+        Recipients:
+          - mail-uk2.nicecxone-sov1.uk
+          - mailtest-uk2.nicecxone-sov1.uk
+        Enabled: true
+        ScanEnabled: true
+        TlsPolicy: Optional
+        Actions:
+          - S3Action:
+              BucketName: uklo-email-ses-storage
+              TopicArn: !Sub arn:aws:sns:eu-west-2:${AWS::AccountId}:channels-email-ses-sns-topic-uksov
+    DependsOn:
+      - ReceiptRuleSet
